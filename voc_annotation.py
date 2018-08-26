@@ -3,12 +3,10 @@ from os import getcwd
 
 sets=[('GS', 'train'), ('GS', 'val'), ('GS', 'test')]
 
-classes = ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car",
-           "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike",
-           "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
+classes = ["upper_outer", "bottom_outer", "dress", "shoes", "hat"] # refine
 
 
-def convert_annotation(appdix, image_id):
+def convert_annotation(appdix, image_id, list_file):
     in_file = open('VOCdevkit/VOC_%s/Annotations/%s.xml'%(appdix, image_id))
     tree=ET.parse(in_file)
     root = tree.getroot()
@@ -26,6 +24,7 @@ def convert_annotation(appdix, image_id):
              int(xmlbox.find('xmax').text),
              int(xmlbox.find('ymax').text))
         line += (" " + ",".join([str(a) for a in b]) + ',' + str(cls_id))
+
     return line
 
 wd = getcwd()
@@ -40,7 +39,7 @@ for appdix, image_set in sets:
         list_file.write(
                 '%s/VOCdevkit/VOC_%s/JPEGImages/%s.jpg'%(wd, appdix, image_id))
 
-        list_file.write(convert_annotation(appdix, image_id))
+        list_file.write(convert_annotation(appdix, image_id, list_file))
         list_file.write('\n')
     list_file.close()
 
