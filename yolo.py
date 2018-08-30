@@ -20,10 +20,10 @@ from keras.utils import multi_gpu_model
 
 class YOLO(object):
     _defaults = {
-        "model_path": 'model_data/yolo.h5',
-        "anchors_path": 'model_data/yolo_anchors.txt',
-        "classes_path": 'model_data/coco_classes.txt',
-        "score" : 0.3,
+        "model_path": 'model_data/trained_weights_final.h5',
+        "anchors_path": 'model_data/anchors.txt',
+        "classes_path": 'model_data/classes.txt',
+        "score" : 0.5,
         "iou" : 0.45,
         "model_image_size" : (416, 416),
         "gpu_num" : 1,
@@ -61,11 +61,12 @@ class YOLO(object):
     def generate(self):
         model_path = os.path.expanduser(self.model_path)
         assert model_path.endswith('.h5'), 'keras model must be h5 file.'
+        print("model path = {}".format(model_path))
 
         # Load model, or construct model and load weights.
         num_anchors = len(self.anchors)
         num_classes = len(self.class_names)
-        is_tiny_version = num_anchors==6 # default setting
+        is_tiny_version = (num_anchors==6) # default setting
         try:
             self.yolo_model = load_model(model_path, compile=False)
         except:

@@ -18,7 +18,7 @@ from yolo3.utils import get_random_data
 
 gflags.DEFINE_string(
         "annotation_path",
-        "2007_train.txt",
+        "GS_train.txt",
         "The path of the annotation file")
 gflags.DEFINE_string(
         "log_dir",
@@ -30,7 +30,7 @@ gflags.DEFINE_string(
         "The dir of the model file")
 gflags.DEFINE_string(
         "pretrained_model_path",
-        "model_data/tiny_yolo_weights.h5",
+        "model_data/yolo_weights.h5",
         "The path of the pretrained model")
 FLAGS = gflags.FLAGS
 
@@ -38,8 +38,8 @@ def main(argv):
     FLAGS(argv)
     annotation_path = FLAGS.annotation_path
     log_dir = FLAGS.log_dir
-    classes_path = os.path.join(FLAGS.model_data, 'voc_classes.txt')
-    anchors_path = os.path.join(FLAGS.model_data, 'yolo_anchors.txt')
+    classes_path = os.path.join(FLAGS.model_data, 'classes.txt')
+    anchors_path = os.path.join(FLAGS.model_data, 'anchors.txt')
     class_names = get_classes(classes_path)
     num_classes = len(class_names)
     anchors = get_anchors(anchors_path)
@@ -53,7 +53,7 @@ def main(argv):
                 anchors,
                 num_classes,
                 freeze_body=2,
-                weights_path='model_data/tiny_yolo_weights.h5')
+                weights_path=FLAGS.pretrained_model_path)
     else:
         model = create_model(
                 input_shape,
@@ -68,7 +68,7 @@ def main(argv):
             monitor='val_loss',
             save_weights_only=True,
             save_best_only=True,
-            period=1)
+            period=3)
 
     reduce_lr = ReduceLROnPlateau(
             monitor='val_loss',
@@ -119,15 +119,15 @@ def main(argv):
                         anchors,
                         num_classes),
                 validation_steps=max(1, num_val//batch_size),
-                epochs=22,
-                initial_epoch=21,
+                epochs=50,
+                initial_epoch=0,
                 callbacks=[logging, checkpoint])
 
         model.save_weights(log_dir + 'trained_weights_stage_1.h5')
 
     # Unfreeze and continue training, to fine-tune.
     # Train longer if the result is not good.
-    if True:
+    if False:
         for i in range(len(model.layers)):
             model.layers[i].trainable = True
         print('Unfreeze all of the layers.')
