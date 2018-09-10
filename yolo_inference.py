@@ -14,20 +14,20 @@ dcd_folder = "B43"
 new_dcd_classes_dict = {
     'B43130517': {'sweater', 'blouse', 'shirt', 't_shirt', 'polo_shirt'},  # t shirt
     'B43130701': {'dress', 'skirt', 'pants'},  # pants
-    'B43050103': {},                           # bra/panty set
     'B43130509': {'coat', 'sweater', 'blouse', 'shirt', 't_shirt', 'polo_shirt'},    # blouse
     'B43130301': {'dress', 'skirt', 'pants'},  # dress
-    'B43050107': {},  # panties
-    'B43050501': {},  # socks
-    'B43070903': {},  # swimsuit
-    'B43130511': {'coat', 'sweater', 'blouse', 'shirt', 't_shirt',
-                  'polo_shirt'},  # jacket
     'B43130501': {'sweater', 'blouse', 'shirt', 't_shirt', 'polo_shirt'},  # shirt
     'B43130519': {'coat', 'sweater', 'blouse', 'shirt', 't_shirt',
                   'polo_shirt'},  # cardigan
-    'B43130503': {'coat', 'sweater', 'blouse', 'shirt', 't_shirt',
-                  'polo_shirt'},  # knit/sweater
-    'B43130703': {'dress', 'skirt', 'pants'}  # skirt
+    # 'B43050103': {},  # bra/panty set
+    # 'B43050107': {},  # panties
+    # 'B43050501': {},  # socks
+    # 'B43070903': {},  # swimsuit
+    # 'B43130503': {'coat', 'sweater', 'blouse', 'shirt', 't_shirt',
+    #               'polo_shirt'},  # knit/sweater
+    # 'B43130511': {'coat', 'sweater', 'blouse', 'shirt', 't_shirt',
+    #               'polo_shirt'},  # jacket
+    # 'B43130703': {'dress', 'skirt', 'pants'}  # skirt
 }
 
 def detect_img(yolo):
